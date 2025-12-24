@@ -1,0 +1,51 @@
+<div class="row">
+    <div class="col-12">
+        <h2>Мои заказы</h2>
+        
+        {{#if orders}}
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Номер заказа</th>
+                            <th>Дата</th>
+                            <th>Статус</th>
+                            <th>Сумма</th>
+                            <th>Товаров</th>
+                            <th>Действия</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {{#each orders}}
+                        <tr>
+                            <td>#{{id}}</td>
+                            <td>{{created_at}}</td>
+                            <td>
+                                {{#if (eq status "pending")}}
+                                    <span class="badge bg-warning">В обработке</span>
+                                {{else if (eq status "completed")}}
+                                    <span class="badge bg-success">Выполнен</span>
+                                {{else if (eq status "cancelled")}}
+                                    <span class="badge bg-danger">Отменен</span>
+                                {{else}}
+                                    <span class="badge bg-secondary">{{status}}</span>
+                                {{/if}}
+                            </td>
+                            <td>{{total_amount}} ₽</td>
+                            <td>{{items_count}}</td>
+                            <td>
+                                <a href="/sales/order/{{id}}" class="btn btn-sm btn-outline-primary">Детали</a>
+                            </td>
+                        </tr>
+                        {{/each}}
+                    </tbody>
+                </table>
+            </div>
+        {{else}}
+            <p class="text-center">У вас пока нет заказов</p>
+            <div class="text-center">
+                <a href="/products" class="btn btn-primary">Перейти к покупкам</a>
+            </div>
+        {{/if}}
+    </div>
+</div>

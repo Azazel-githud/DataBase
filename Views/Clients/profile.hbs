@@ -1,0 +1,71 @@
+<div class="row">
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-header">
+                <h3>Профиль пользователя</h3>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-3">
+                        <p><strong>Имя пользователя:</strong></p>
+                    </div>
+                    <div class="col-md-9">
+                        <p>{{user.username}}</p>
+                    </div>
+                </div>
+                
+                <div class="row">
+                    <div class="col-md-3">
+                        <p><strong>Email:</strong></p>
+                    </div>
+                    <div class="col-md-9">
+                        <p>{{user.email}}</p>
+                    </div>
+                </div>
+                
+                <div class="row">
+                    <div class="col-md-3">
+                        <p><strong>Имя:</strong></p>
+                    </div>
+                    <div class="col-md-9">
+                        <p>{{#if user.first_name}}{{user.first_name}}{{else}}Не указано{{/if}}</p>
+                    </div>
+                </div>
+                
+                <div class="row">
+                    <div class="col-md-3">
+                        <p><strong>Фамилия:</strong></p>
+                    </div>
+                    <div class="col-md-9">
+                        <p>{{#if user.last_name}}{{user.last_name}}{{else}}Не указано{{/if}}</p>
+                    </div>
+                </div>
+                
+                <div class="row">
+                    <div class="col-md-3">
+                        <p><strong>Дата регистрации:</strong></p>
+                    </div>
+                    <div class="col-md-9">
+                        <p>{{user.created_at}}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-header">
+                <h4>Навигация</h4>
+            </div>
+            <div class="card-body">
+                <ul class="list-unstyled">
+                    <li class="mb-2"><a href="/clients/profile" class="btn btn-outline-primary w-100">Профиль</a></li>
+                    <li class="mb-2"><a href="/clients/purchase-history" class="btn btn-outline-primary w-100">История покупок</a></li>
+                    <li class="mb-2"><a href="/products/cart" class="btn btn-outline-primary w-100">Корзина</a></li>
+                    <li class="mb-2"><a href="/clients/logout" class="btn btn-outline-danger w-100">Выход</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>

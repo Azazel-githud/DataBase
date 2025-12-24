@@ -1,0 +1,87 @@
+<div class="row">
+    <div class="col-md-3">
+        <div class="card">
+            <div class="card-header">
+                <h5>Фильтры</h5>
+            </div>
+            <div class="card-body">
+                <form method="GET" action="/products">
+                    <div class="mb-3">
+                        <label class="form-label">Категория</label>
+                        <select name="category" class="form-select">
+                            <option value="">Все категории</option>
+                            {{#each categories}}
+                                <option value="{{id}}" {{#if (eq ../currentCategory (toString id))}}selected{{/if}}>{{name}}</option>
+                            {{/each}}
+                        </select>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label class="form-label">Бренд</label>
+                        <select name="brand" class="form-select">
+                            <option value="">Все бренды</option>
+                            {{#each brands}}
+                                <option value="{{id}}" {{#if (eq ../currentBrand (toString id))}}selected{{/if}}>{{name}}</option>
+                            {{/each}}
+                        </select>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label class="form-label">Поиск</label>
+                        <input type="text" name="search" class="form-control" placeholder="Поиск по названию..." value="{{currentSearch}}">
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label class="form-label">Сортировка</label>
+                        <select name="sort" class="form-select">
+                            <option value="" {{#if (eq currentSort "")}}selected{{/if}}>По умолчанию</option>
+                            <option value="price-asc" {{#if (eq currentSort "price-asc")}}selected{{/if}}>Цена: по возрастанию</option>
+                            <option value="price-desc" {{#if (eq currentSort "price-desc")}}selected{{/if}}>Цена: по убыванию</option>
+                            <option value="name-asc" {{#if (eq currentSort "name-asc")}}selected{{/if}}>Название: А-Я</option>
+                            <option value="name-desc" {{#if (eq currentSort "name-desc")}}selected{{/if}}>Название: Я-А</option>
+                        </select>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary">Применить</button>
+                    <a href="/products" class="btn btn-secondary">Сбросить</a>
+                </form>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-9">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <h2>Товары</h2>
+            <p>{{products.length}} товар(ов) найдено</p>
+        </div>
+        
+        <div class="row">
+            {{#if products}}
+                {{#each products}}
+                <div class="col-md-4 col-sm-6 mb-4">
+                    <div class="card product-card h-100">
+                        <img src="{{#if image_url}}{{image_url}}{{else}}https://via.placeholder.com/200x200/CCCCCC/FFFFFF?text=No+Image{{/if}}" class="card-img-top" alt="{{name}}">
+                        <div class="card-body d-flex flex-column">
+                            <h5 class="card-title">{{name}}</h5>
+                            <p class="card-text">
+                                <small class="text-muted">{{brand_name}}</small><br>
+                                <small class="text-muted">{{category_name}}</small>
+                            </p>
+                            <div class="mt-auto">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <strong class="text-primary">{{price}} ₽</strong>
+                                    <a href="/products/{{id}}" class="btn btn-sm btn-outline-primary">Подробнее</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {{/each}}
+            {{else}}
+                <div class="col-12">
+                    <p class="text-center">Товары не найдены</p>
+                </div>
+            {{/if}}
+        </div>
+    </div>
+</div>

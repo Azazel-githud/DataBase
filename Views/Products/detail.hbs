@@ -1,0 +1,75 @@
+<div class="row">
+    <div class="col-md-6">
+        <img src="{{#if product.image_url}}{{product.image_url}}{{else}}https://via.placeholder.com/400x400/CCCCCC/FFFFFF?text=No+Image{{/if}}" class="img-fluid rounded" alt="{{product.name}}">
+    </div>
+    
+    <div class="col-md-6">
+        <h1>{{product.name}}</h1>
+        <p class="lead">{{product.brand_name}}</p>
+        
+        <div class="mb-3">
+            <h4 class="text-primary">{{product.price}} ₽</h4>
+        </div>
+        
+        <p>{{product.description}}</p>
+        
+        <div class="mb-4">
+            <p><strong>Категория:</strong> {{product.category_name}}</p>
+            <p><strong>Бренд:</strong> {{product.brand_name}}</p>
+            <p><strong>Наличие:</strong> 
+                {{#if (gt product.stock_quantity 0)}}
+                    <span class="text-success">В наличии ({{product.stock_quantity}} шт.)</span>
+                {{else}}
+                    <span class="text-danger">Нет в наличии</span>
+                {{/if}}
+            </p>
+        </div>
+        
+        {{#if (gt product.stock_quantity 0)}}
+        <form method="POST" action="/products/add-to-cart" class="mb-3">
+            <input type="hidden" name="productId" value="{{product.id}}">
+            <div class="row align-items-center">
+                <div class="col-auto">
+                    <label for="quantity" class="form-label">Количество:</label>
+                </div>
+                <div class="col-auto">
+                    <input type="number" class="form-control" id="quantity" name="quantity" value="1" min="1" max="{{product.stock_quantity}}" style="width: 80px;">
+                </div>
+                <div class="col-auto">
+                    <button type="submit" class="btn btn-primary">Добавить в корзину</button>
+                </div>
+            </div>
+        </form>
+        {{else}}
+            <div class="alert alert-warning">Товар временно отсутствует</div>
+        {{/if}}
+    </div>
+</div>
+
+{{#if similarProducts}}
+<div class="row mt-5">
+    <div class="col-12">
+        <h3>Похожие товары</h3>
+    </div>
+    
+    <div class="row">
+        {{#each similarProducts}}
+        <div class="col-md-3 col-sm-6 mb-4">
+            <div class="card product-card h-100">
+                <img src="{{#if image_url}}{{image_url}}{{else}}https://via.placeholder.com/200x200/CCCCCC/FFFFFF?text=No+Image{{/if}}" class="card-img-top" alt="{{name}}">
+                <div class="card-body d-flex flex-column">
+                    <h5 class="card-title">{{name}}</h5>
+                    <p class="card-text flex-grow-1">{{brand_name}}</p>
+                    <div class="mt-auto">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <strong class="text-primary">{{price}} ₽</strong>
+                            <a href="/products/{{id}}" class="btn btn-sm btn-outline-primary">Подробнее</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {{/each}}
+    </div>
+</div>
+{{/if}}

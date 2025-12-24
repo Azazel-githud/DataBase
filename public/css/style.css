@@ -1,0 +1,80 @@
+/* Общие стили для BRAND SHOP */
+
+body {
+    background-color: #f8f9fa;
+}
+
+.navbar-brand {
+    font-weight: bold;
+    font-size: 1.5rem;
+}
+
+.hero-section {
+    border-radius: 10px;
+    margin-bottom: 2rem;
+}
+
+.product-card {
+    transition: transform 0.2s;
+    height: 100%;
+}
+
+.product-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.card-img-top {
+    height: 200px;
+    object-fit: cover;
+}
+
+.footer {
+    margin-top: auto;
+    background-color: #343a40 !important;
+}
+
+/* Стили для корзины */
+.table th {
+    border-top: none;
+}
+
+/* Адаптивность */
+@media (max-width: 768px) {
+    .hero-section .col-md-6 {
+        margin-bottom: 1.5rem;
+    }
+}
+
+/* Стили для кнопок */
+.btn-primary {
+    background-color: #0d6efd;
+    border-color: #0d6efd;
+}
+
+.btn-primary:hover {
+    background-color: #0b5ed7;
+    border-color: #0a58ca;
+}
+
+/* Стили для карточек */
+.card {
+    border: none;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.card-header {
+    background-color: #f8f9fa;
+    border-bottom: 1px solid #dee2e6;
+}
+
+/* Стили для форм */
+.form-control:focus {
+    border-color: #86b7fe;
+    box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+}
+
+/* Стили для бейджей */
+.badge {
+    font-size: 0.75em;
+}
