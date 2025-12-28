@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BRAND SHOP</title>
+  <link rel="stylesheet" href="/css/globals.css">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <div class="container">
+    <header class="header">
+      <div class="menu"><img class="menu-icon" src="/img/burger menu button.png"></div>
+      <a href="/" class="logo"><img src="/img/logo.png"></a>
+      <nav class="nav">
+        <div class="nav-item"><a href="/products?cat_id=1">NEW ARRIVALS</a></div>
+        <div class="nav-item"><a href="/products?cat_id=2">DIARIES & CALENDARS</a></div>
+        <div class="nav-item"><a href="/products?cat_id=4">CARRY</a></div>
+        <div class="nav-item"><a href="/products?cat_id=5">LIFESTYLE</a></div>
+        <div class="nav-item"><a href="/products?cat_id=0" class="sale">SALE</a></div>
+      </nav>
+      <div class="search"><img src="/img/search1.png"><input placeholder="Search..."></div>
+      <div class="icons">
+        <a href="/sales/cart" class="Cart" style="background-image: url('/img/cart.png'); width:24px; background-size:cover;"></a>
+        <span class="cart-badge">{{cartLen}}</span>
+      </div>
+    </header>
+
+    <section class="main-content">
+      <div class="textcontent">
+        <h2>Plan & Write / Notebooks & Notepads</h2>
+        <h1>Notebooks & Notepads</h1>
+        <p>There's nothing like writing in a new kikki.K Notebook...</p>
+      </div>
+      <a href="/products"><img class="image" src="/img/11.png"></a>
+    </section>
+
+    <section class="products-scroll">
+      <h2>Best Sellers on Sale</h2>
+      <div class="products-grid">
+        <!-- Можно вставить 2–3 карточки вручную для теста, или подключить через /products позже -->
+      </div>
+    </section>
+
+    <footer class="footer">
+      <p>&copy; 2025 BRAND SHOP. All rights reserved.</p>
+    </footer>
+  </div>
+</body>
+</html>
