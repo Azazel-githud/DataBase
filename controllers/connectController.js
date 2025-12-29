@@ -1,12 +1,12 @@
-const { Pool } = require('pg');
+// const { Pool } = require('pg');
 
-const pool = new Pool({
-  user: 'postgres',
-  host: 'localhost',
-  database: 'brand_shop',
-  password: 'postgresql',
-});
+// const pool = new Pool({
+//   user: 'postgres',
+//   host: 'localhost',
+//   database: 'brand_shop',
+//   password: 'postgresql',
+// });
 
-let cart = [];
+// let cart = [];
 
-module.exports = { pool, cart };
+// module.exports = { pool, cart };

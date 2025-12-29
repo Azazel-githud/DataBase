@@ -1,12 +1,16 @@
+// /routes/productRouter.js
 const express = require('express');
 const router = express.Router();
-const controller = require('../controllers/productController');
+const ctrl = require('../controllers/productController');
 
-router.get('/', controller.getProducts);
-router.get('/add', controller.addProductForm);
-router.post('/add', controller.createProduct);
-router.get('/edit/:id', controller.editProductForm);
-router.post('/update', controller.updateProduct);
-router.post('/delete/:id', controller.deleteProduct);
+// Важно: порядок маршрутов — сначала параметризованные, потом общие
+router.get('/add', ctrl.addProductForm);
+router.post('/add', ctrl.createProduct);
+router.get('/edit/:id', ctrl.editProductForm);
+router.post('/update', ctrl.updateProduct);
+router.post('/delete/:id', ctrl.deleteProduct);
+
+// Главный маршрут — в конце!
+router.get('/', ctrl.getProducts);
 
 module.exports = router;

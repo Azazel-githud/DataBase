@@ -6,45 +6,185 @@
   <title>BRAND SHOP</title>
   <link rel="stylesheet" href="/css/globals.css">
   <link rel="stylesheet" href="/css/style.css">
+  <style>
+    .cart-badge {
+      position: absolute;
+      top: -8px;
+      right: -8px;
+      background: #e71d36;
+      color: white;
+      border-radius: 50%;
+      width: 20px;
+      height: 20px;
+      font-size: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .color-option {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background-color: var(--color, #000);
+      display: inline-block;
+      margin-right: 4px;
+    }
+  </style>
 </head>
 <body>
   <div class="container">
+    <!-- Header -->
     <header class="header">
       <div class="menu"><img class="menu-icon" src="/img/burger menu button.png"></div>
       <a href="/" class="logo"><img src="/img/logo.png"></a>
       <nav class="nav">
         <div class="nav-item"><a href="/products?cat_id=1">NEW ARRIVALS</a></div>
         <div class="nav-item"><a href="/products?cat_id=2">DIARIES & CALENDARS</a></div>
+        <div class="nav-item"><a href="/products?cat_id=3">PLAN & WRITE</a></div>
         <div class="nav-item"><a href="/products?cat_id=4">CARRY</a></div>
         <div class="nav-item"><a href="/products?cat_id=5">LIFESTYLE</a></div>
-        <div class="nav-item"><a href="/products?cat_id=0" class="sale">SALE</a></div>
+        <div class="nav-item"><a href="/products?cat_id=6">GIFTING</a></div>
+        <div class="nav-item"><a href="/products?cat_id=7" class="sale">SALE</a></div>
       </nav>
       <div class="search"><img src="/img/search1.png"><input placeholder="Search..."></div>
       <div class="icons">
-        <a href="/sales/cart" class="Cart" style="background-image: url('/img/cart.png'); width:24px; background-size:cover;"></a>
-        <span class="cart-badge">{{cartLen}}</span>
+        <a href="/cart" class="Cart" style="position: relative; display: inline-block;">
+          <img src="/img/cart.png" style="width:24px;">
+          {{#if cartLen}}
+          <span class="cart-badge">{{cartLen}}</span>
+          {{/if}}
+        </a>
       </div>
     </header>
 
-    <section class="main-content">
-      <div class="textcontent">
-        <h2>Plan & Write / Notebooks & Notepads</h2>
-        <h1>Notebooks & Notepads</h1>
-        <p>There's nothing like writing in a new kikki.K Notebook...</p>
-      </div>
-      <a href="/products"><img class="image" src="/img/11.png"></a>
-    </section>
-
+    <!-- Main Content -->
     <section class="products-scroll">
       <h2>Best Sellers on Sale</h2>
       <div class="products-grid">
-        <!-- Можно вставить 2–3 карточки вручную для теста, или подключить через /products позже -->
+        {{#each products}}
+        <a href="/product/{{prod_id}}" class="product-card">
+          <div class="product-image">
+            <img src="/img/{{image_main}}" alt="{{prod_name}}">
+            {{#if image_hover}}
+            <img src="/img/{{image_hover}}" class="hover">
+            {{/if}}
+            <button class="wishlist-btn">
+              <svg viewBox="0 0 24 24" width="24" height="24">
+                <path fill="currentColor" d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+              </svg>
+            </button>
+          </div>
+          <h3>{{prod_name}}</h3>
+          <p class="price">${{price}}</p>
+          {{#if color_hex}}
+            <div class="color-option" style="--color: {{color_hex}};"></div>
+          {{/if}}
+          <a href="/sales/addToCart/{{prod_id}}" class="add-cart-btn">+ Bag</a>
+        </a>
+        {{/each}}
       </div>
     </section>
 
+    <a href="/products?cat_id=1">
+      <button class="cta-btn">Shop New Arrivals</button>
+    </a>
+
+    <section class="holiday-section">
+      <div class="holiday-left">
+        <img src="/img/NewtoPlayCarry.png" alt="New to Play Carry">
+        <h3>New to Play Carry</h3>
+        <button class="btn">Shop New Carry</button>
+      </div>
+      <div class="holiday-right">
+        <img src="/img/MixMatchTrek.png" alt="Mix & Match TREK">
+        <h3>Mix & Match TREK.</h3>
+        <button class="btn">Build Your TREK. Bag</button>
+      </div>
+    </section>
+
+    <section class="categories">
+      <h2>Shop By Category</h2>
+      <div class="category-grid">
+        <div class="category-card">
+          <img src="/img/ShopGoSeries.png" alt="Go Series">
+          <button class="btn">Shop Go Series</button>
+        </div>
+        <div class="category-card">
+          <img src="/img/NewAccessories.png" alt="Accessories">
+          <button class="btn">New Accessories</button>
+        </div>
+        <div class="category-card">
+          <img src="/img/NewEatDrink.png" alt="Eat & Drink">
+          <button class="btn">New Eat & Drink</button>
+        </div>
+        <div class="category-card">
+          <img src="/img/Wear.png" alt="Wear">
+          <button class="btn">Wear</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="big-picture-section">
+      <div class="main-image">
+        <img src="/img/OGO1.png" alt="Outfit Game On">
+      </div>
+      <div class="thumbnails">
+        <img src="/img/OGO1.png">
+        <img src="/img/OGO2.png">
+        <img src="/img/OGO3.png">
+        <img src="/img/OGO4.png">
+      </div>
+      <div class="description">
+        <h3>Outfit Game On</h3>
+        <p>Bounce into the weekend with our new 100% cotton Waffle Knit Tee's — 4 house-sports inspired colours with contrast colour cuffs and semi-fitted retro cut. Match with an Accordion Knit Stripe Bag to complete the look!</p>
+      </div>
+      <div class="counter">1 / 4</div>
+    </section>
+
+    <section class="personal-section">
+      <div class="text-content">
+        <h2>Make It Personal</h2>
+        <p>Personalised gifts for everyone on your list, A–Z! Create one-of-a-kind gifts by adding your own fun words up to 5 characters long.</p>
+        <button class="btn">Shop Personalisation</button>
+      </div>
+      <div class="image-content">
+        <img src="/img/MakeitPersonal.png" alt="Personalisation">
+      </div>
+    </section>
+
+    <!-- Footer -->
     <footer class="footer">
-      <p>&copy; 2025 BRAND SHOP. All rights reserved.</p>
+      <div class="footer-section">
+        <h4>Customer Service</h4>
+        <a href="#">Contact Us</a>
+        <a href="#">FAQs</a>
+        <a href="#">Shipping & Returns</a>
+      </div>
+      <div class="footer-section">
+        <h4>About Us</h4>
+        <a href="#">Our Story</a>
+        <a href="#">Sustainability</a>
+      </div>
+      <div class="footer-section">
+        <h4>Follow Us</h4>
+        <div class="social-icons">
+          <a href="#"><img src="/img/instagram-icon.png" alt="Instagram"></a>
+          <a href="#"><img src="/img/pinterest-icon.png" alt="Pinterest"></a>
+        </div>
+      </div>
     </footer>
   </div>
+
+  <script>
+    // Восстановление selected после фильтрации (если будет на главной)
+    document.addEventListener('DOMContentLoaded', () => {
+      const urlParams = new URLSearchParams(window.location.search);
+      const catId = urlParams.get('cat_id');
+      if (catId) {
+        const select = document.querySelector('#cat-select');
+        if (select) select.value = catId;
+      }
+    });
+  </script>
 </body>
 </html>

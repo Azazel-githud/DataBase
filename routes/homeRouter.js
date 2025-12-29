@@ -1,14 +1,10 @@
-// /routes/homeRouter.js
-const express = require('express');
-const router = express.Router();
-const { cart } = require('../controllers/connectController');
+const express = require("express");
+const homeController = require("../controllers/homeController.js");
 
-router.get('/', (req, res) => {
-  res.render('index', { cartLen: cart.length }); // ← передаём cartLen в шаблон
-});
+const homeRouter = express.Router();
+console.log('✅ homeRouter подключён');
 
-// router.get('/about', (req, res) => {
-//   res.render('about', { cartLen: cart.length });
-// });
+homeRouter.get("/about", homeController.about);
+homeRouter.get("/", homeController.index);
 
-module.exports = router;
+module.exports = homeRouter;
