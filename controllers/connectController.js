@@ -7,6 +7,8 @@ const pool = new Pool({
   password: 'postgresql',
 });
 
+pool.connect();
+
 let cart = [];
 
 module.exports = { pool, cart };

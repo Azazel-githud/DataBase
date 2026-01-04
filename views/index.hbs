@@ -35,7 +35,7 @@
   <div class="container">
     <!-- Header -->
     <header class="header">
-      <div class="menu"><img class="menu-icon" src="/img/burger menu button.png"></div>
+      <div class="menu"><img class="menu-icon" src="img/burger menu button.png"></div>
       <a href="/" class="logo"><img src="/img/logo.png"></a>
       <nav class="nav">
         <div class="nav-item"><a href="/products?cat_id=1">NEW ARRIVALS</a></div>
@@ -62,11 +62,11 @@
       <h2>Best Sellers on Sale</h2>
       <div class="products-grid">
         {{#each products}}
-        <a href="/product/{{prod_id}}" class="product-card">
+        <a href="/product/{{this.prod_id}}" class="product-card">
           <div class="product-image">
-            <img src="/img/{{image_main}}" alt="{{prod_name}}">
-            {{#if image_hover}}
-            <img src="/img/{{image_hover}}" class="hover">
+            <img src="/img/{{this.image_main}}" alt="{{this.prod_name}}">
+            {{#if this.image_hover}}
+            <img src="/img/{{this.image_hover}}" class="hover">
             {{/if}}
             <button class="wishlist-btn">
               <svg viewBox="0 0 24 24" width="24" height="24">
@@ -74,12 +74,12 @@
               </svg>
             </button>
           </div>
-          <h3>{{prod_name}}</h3>
-          <p class="price">${{price}}</p>
+          <h3>{{this.prod_name}}</h3>
+          <p class="price">${{this.price}}</p>
           {{#if color_hex}}
             <div class="color-option" style="--color: {{color_hex}};"></div>
           {{/if}}
-          <a href="/sales/addToCart/{{prod_id}}" class="add-cart-btn">+ Bag</a>
+          <a href="/sales/addToCart/{{this.prod_id}}" class="add-cart-btn">+ Bag</a>
         </a>
         {{/each}}
       </div>
