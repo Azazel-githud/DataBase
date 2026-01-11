@@ -1,0 +1,19 @@
+{{#> layout}}
+<main class="main-content">
+  <section class="product-section">
+    <div class="product-info">
+      <h1 class="product-title">➕ Новый клиент</h1>
+      <div class="divider"></div>
+
+      <form action="/clients/add" method="POST">
+        {{> client-form-fields}}
+        
+        <div class="form-actions" style="margin-top: 24px;">
+          <button type="submit" class="add-to-cart-btn">✅ Сохранить</button>
+          <a href="/clients" class="wishlist-btn2" style="margin-left: 12px;">← Отмена</a>
+        </div>
+      </form>
+    </div>
+  </section>
+</main>
+{{/layout}}

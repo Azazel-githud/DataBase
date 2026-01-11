@@ -1,4 +1,3 @@
-// ✅ controllers/homeController.js
 const { pool, cart } = require('./connectController');
 
 exports.index = async (req, res) => {

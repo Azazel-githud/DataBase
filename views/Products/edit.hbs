@@ -1,0 +1,116 @@
+{{#> layout}}
+<main class="main-content">
+  <section class="product-section">
+    <div class="product-info">
+      <h1 class="product-title">✏️ Редактировать товар #{{product.prod_id}}</h1>
+      <div class="divider"></div>
+
+      <form action="/products/update/{{product.prod_id}}" method="POST" enctype="multipart/form-data">
+        <!-- Название -->
+        <div class="form-group">
+          <label>Название товара *</label>
+          <input type="text" name="prod_name" required value="{{product.prod_name}}">
+        </div>
+
+        <!-- Описание -->
+        <div class="form-group">
+          <label>Описание</label>
+          <textarea name="description" rows="4">{{product.description}}</textarea>
+        </div>
+
+        <!-- SKU -->
+        <div class="form-group">
+          <label>Артикул (SKU)</label>
+          <input type="text" name="sku" value="{{product.sku}}">
+        </div>
+
+        <!-- Категория -->
+        <div class="form-group">
+          <label>Категория *</label>
+          <select name="cat_id" required>
+            {{#each categories}}
+              <option value="{{this.cat_id}}" {{#if (eq this.cat_id ../product.cat_id)}}selected{{/if}}>
+                {{this.cat_name}}
+              </option>
+            {{/each}}
+          </select>
+        </div>
+
+        <!-- Бренд -->
+        <div class="form-group">
+          <label>Бренд</label>
+          <select name="brand_id">
+            <option value="">— Не указан —</option>
+            {{#each brands}}
+              <option value="{{this.brand_id}}" {{#if (eq this.brand_id ../product.brand_id)}}selected{{/if}}>
+                {{this.brand_name}}
+              </option>
+            {{/each}}
+          </select>
+        </div>
+
+        <!-- Цена -->
+        <div class="form-group">
+          <label>Цена ($)</label>
+          <input type="number" name="price" step="0.01" min="0" required value="{{product.price}}">
+        </div>
+
+        <!-- Склад -->
+        <div class="form-group">
+          <label>Количество на складе</label>
+          <input type="number" name="stock" min="0" value="{{product.stock}}">
+        </div>
+
+        <!-- Текущие изображения -->
+        <div class="form-group">
+          <label>Текущие изображения</label>
+          <div style="display: flex; gap: 12px; flex-wrap: wrap; margin-top: 8px;">
+            {{#if product.image_main}}
+              <div><img src="/{{product.image_main}}" style="width: 80px; height: auto; border: 1px solid #ddd;"></div>
+            {{/if}}
+            {{#if product.image_hover}}
+              <div><img src="/{{product.image_hover}}" style="width: 80px; height: auto; border: 1px solid #ddd;"></div>
+            {{/if}}
+            {{#each image_gallery}}
+              <div><img src="/{{this}}" style="width: 80px; height: auto; border: 1px solid #ddd;"></div>
+            {{/each}}
+          </div>
+          <small>Загрузите новые файлы, чтобы заменить</small>
+        </div>
+
+        <!-- Новые изображения -->
+        <div class="form-group">
+          <label>Основное изображение (заменит текущее)</label>
+          <input type="file" name="mainImage" accept="image/*">
+        </div>
+
+        <div class="form-group">
+          <label>Ховер-изображение</label>
+          <input type="file" name="hoverImage" accept="image/*">
+        </div>
+
+        <div class="form-group">
+          <label>Галерея (до 5 шт., заменит текущую)</label>
+          <input type="file" name="galleryImages" accept="image/*" multiple>
+        </div>
+
+        <!-- Кнопки -->
+        <div class="form-actions" style="margin-top: 24px;">
+          <button type="submit" class="add-to-cart-btn">✅ Обновить товар</button>
+          <a href="/products" class="wishlist-btn2" style="margin-left: 12px;">← Отмена</a>
+        </div>
+      </form>
+    </div>
+  </section>
+</main>
+
+{{!-- Стили формы --}}
+<style>
+  .form-group { margin-bottom: 18px; }
+  .form-group label { display: block; font-weight: 600; margin-bottom: 6px; }
+  .form-group input, .form-group textarea, .form-group select {
+    width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 4px;
+  }
+  .form-actions { display: flex; gap: 12px; }
+</style>
+{{/layout}}

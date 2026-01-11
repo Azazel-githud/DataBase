@@ -1,0 +1,93 @@
+{{#> layout}}
+<main class="main-content">
+  <section class="product-section">
+    <div class="product-info">
+      <h1 class="product-title">➕ Добавить новый товар</h1>
+      <div class="divider"></div>
+
+      <form action="/products/add" method="POST" enctype="multipart/form-data">
+        <!-- Название -->
+        <div class="form-group">
+          <label>Название товара *</label>
+          <input type="text" name="prod_name" required placeholder="Gift Pack In-Spiral">
+        </div>
+
+        <!-- Описание -->
+        <div class="form-group">
+          <label>Описание</label>
+          <textarea name="description" rows="4" placeholder="Freshly curated gift set...">{{description}}</textarea>
+        </div>
+
+        <!-- SKU -->
+        <div class="form-group">
+          <label>Артикул (SKU)</label>
+          <input type="text" name="sku" placeholder="116821-CORAL-OS">
+        </div>
+
+        <!-- Категория -->
+        <div class="form-group">
+          <label>Категория *</label>
+          <select name="cat_id" required>
+            <option value="">— Выберите —</option>
+            {{#each categories}}
+              <option value="{{this.cat_id}}">{{this.cat_name}}</option>
+            {{/each}}
+          </select>
+        </div>
+
+        <!-- Бренд -->
+        <div class="form-group">
+          <label>Бренд</label>
+          <select name="brand_id">
+            <option value="">— Не указан —</option>
+            {{#each brands}}
+              <option value="{{this.brand_id}}">{{this.brand_name}}</option>
+            {{/each}}
+          </select>
+        </div>
+
+        <!-- Цена -->
+        <div class="form-group">
+          <label>Цена ($)</label>
+          <input type="number" name="price" step="0.01" min="0" required value="40.00">
+        </div>
+
+        <!-- Склад -->
+        <div class="form-group">
+          <label>Количество на складе</label>
+          <input type="number" name="stock" min="0" value="10">
+        </div>
+
+        <!-- Основное изображение -->
+        <div class="form-group">
+          <label>Основное изображение (показывается в списке)</label>
+          <input type="file" name="mainImage" accept="image/*">
+          <small>Напр.: фото товара с фронта</small>
+        </div>
+
+        <!-- Ховер-изображение -->
+        <div class="form-group">
+          <label>Ховер-изображение (при наведении в списке)</label>
+          <input type="file" name="hoverImage" accept="image/*">
+          <small>Напр.: фото товара под углом</small>
+        </div>
+
+        <!-- Галерея (до 5 шт.) -->
+        <div class="form-group">
+          <label>Изображения товара (галерея, до 5 шт.)</label>
+          <input type="file" name="galleryImages" accept="image/*" multiple>
+          <small>Первое — основное в карточке товара</small>
+        </div>
+
+        <!-- Кнопки -->
+        <div class="form-actions" style="margin-top: 24px;">
+          <button type="submit" class="add-to-cart-btn" style="width: auto;">✅ Сохранить товар</button>
+          <a href="/products" class="wishlist-btn2" style="margin-left: 12px; display: inline-block;">
+            ← Отмена
+          </a>
+        </div>
+      </form>
+    </div>
+  </section>
+</main>
+{{/layout}}

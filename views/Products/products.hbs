@@ -1,0 +1,100 @@
+{{#> layout }}
+<main class="main-content">
+  <!-- Hero section (как в index1.html) -->
+  <section class="textcontent">
+    <h2>Plan & Write / Notebooks & Notepads</h2>
+    <h1>Notebooks & Notepads</h1>
+    <p>There's nothing like writing in a new kikki.K Notebook...</p>
+  </section>
+
+  <!-- Фильтры и сортировка -->
+  <section class="filters" style="margin: 24px 0; padding: 0 16px;">
+    <form method="GET" style="display: flex; gap: 16px; align-items: end; flex-wrap: wrap;">
+      <!-- Категория -->
+      <div>
+        <label for="cat-select">Категория</label>
+        <select name="cat_id" id="cat-select" onchange="this.form.submit()">
+          <option value="0">Все категории</option>
+          {{#each categories}}
+            <option value="{{this.cat_id}}" {{#if (eq this.cat_id ../curCatId)}}selected{{/if}}>
+              {{this.cat_name}}
+            </option>
+          {{/each}}
+        </select>
+      </div>
+
+      <!-- Сортировка -->
+      <div>
+        <label for="sort-select">Сортировка</label>
+        <select name="sort" id="sort-select" onchange="this.form.submit()">
+          <option value="">По умолчанию</option>
+          <option value="name-asc" {{#if (eq sort 'name-asc')}}selected{{/if}}>Название (А→Я)</option>
+          <option value="name-desc" {{#if (eq sort 'name-desc')}}selected{{/if}}>Название (Я→А)</option>
+          <option value="price-asc" {{#if (eq sort 'price-asc')}}selected{{/if}}>Цена (по возрастанию)</option>
+          <option value="price-desc" {{#if (eq sort 'price-desc')}}selected{{/if}}>Цена (по убыванию)</option>
+        </select>
+      </div>
+
+      <button type="submit" class="wishlist-btn2" style="height: 38px;">Применить</button>
+    </form>
+  </section>
+
+  <!-- Товары -->
+  <section class="products-scroll">
+    <h2>
+      {{#if curCatId}}
+        {{#findCategory categories curCatId}}Товары: {{.}}{{/findCategory}}
+      {{else}}
+        Все товары
+      {{/if}}
+      ({{products.length}})
+    </h2>
+    <div class="products-grid">
+      {{#each products}}
+      <a href="/products/{{this.prod_id}}" class="product-card">
+        <div class="product-image">
+          <img src="/{{this.image_main}}" alt="{{this.prod_name}}">
+          {{#if this.image_hover}}
+            <img src="/{{this.image_hover}}" class="hover">
+          {{/if}}
+          <button class="wishlist-btn">❤</button>
+        </div>
+        <h3>{{this.prod_name}}</h3>
+        <p class="price">${{this.price}}</p>
+        <a href="/sales/addToCart/{{this.prod_id}}" class="add-cart-btn">+ Bag</a>
+      </a>
+      <div class="product-actions" style="margin-top: 8px;">
+        <a href="/products/edit/{{this.prod_id}}" class="wishlist-btn2" style="font-size: 12px; padding: 4px 8px;">✏️ Ред.</a>
+      </div>
+      <!-- Кнопка удаления -->
+      <form action="/products/delete/{{this.prod_id}}" method="POST" style="display: inline;">
+        <button 
+          type="submit" 
+          class="delete-btn"
+          onclick="return confirm('Удалить товар «{{this.prod_name}}» и все его изображения?')"
+          style="background: none; border: none; color: #e74c3c; cursor: pointer; font-size: 14px; margin-left: 8px;"
+        >
+          🗑️ Удалить
+        </button>
+      </form>
+      {{/each}}
+
+      {{#unless products.length}}
+        <p style="grid-column: 1/-1; text-align: center; color: #777;">Товары не найдены</p>
+      {{/unless}}
+    </div>
+  </section>
+</main>
+
+<!-- Хелпер для поиска категории по ID -->
+<script>
+  // Восстанавливаем selected после фильтрации (как в ТЗ)
+  document.addEventListener('DOMContentLoaded', () => {
+    const catSelect = document.getElementById('cat-select');
+    const sortSelect = document.getElementById('sort-select');
+    // Выбор уже сохранён через Handlebars, но на всякий случай:
+    if (catSelect) catSelect.value = '{{curCatId}}';
+    if (sortSelect) sortSelect.value = '{{sort}}';
+  });
+</script>
+{{/layout}}

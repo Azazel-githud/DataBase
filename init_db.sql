@@ -16,6 +16,7 @@ CREATE TABLE products (
   brand_id INT REFERENCES brands(brand_id),
   image_main VARCHAR(255),
   image_hover VARCHAR(255),
+  image_gallery VARCHAR(255),
   sku VARCHAR(50) UNIQUE
 );
 
@@ -27,9 +28,7 @@ CREATE TABLE clients (
   phone VARCHAR(20),
   address TEXT,
   city VARCHAR(100),
-  postcode VARCHAR(20),
-  country VARCHAR(100) DEFAULT 'Australia',
-  created_at TIMESTAMPTZ DEFAULT NOW()
+  country VARCHAR(100)
 );
 
 CREATE TABLE orders (

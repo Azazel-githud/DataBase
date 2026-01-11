@@ -1,0 +1,162 @@
+{{! views/Sales/Cart.hbs }}
+{{#> layout}}
+<main class="main-content">
+  <section class="cart-section">
+    <div class="cart-info">
+      <h1 class="cart-title">🛒 Корзина покупок</h1>
+      <div class="divider"></div>
+
+      {{#if cartItems.length}}
+      <div class="cart-items">
+        <table style="width: 100%; border-collapse: collapse; margin-bottom: 30px;">
+          <thead>
+            <tr style="border-bottom: 2px solid #e0e0e0;">
+              <th style="padding: 12px; text-align: left;">Товар</th>
+              <th style="padding: 12px; text-align: center;">Цена</th>
+              <th style="padding: 12px; text-align: center;">Кол-во</th>
+              <th style="padding: 12px; text-align: right;">Сумма</th>
+              <th style="padding: 12px; text-align: center;">Действия</th>
+            </tr>
+          </thead>
+          <tbody>
+            {{#each cartItems}}
+            <tr style="border-bottom: 1px solid #f0f0f0;">
+              <td style="padding: 12px;">
+                <div style="display: flex; align-items: center;">
+                  {{#if this.image_main}}
+                  <img src="/img/{{this.image_main}}" alt="{{this.prod_name}}" 
+                       style="width: 60px; height: 60px; object-fit: cover; margin-right: 15px; border-radius: 4px;">
+                  {{/if}}
+                  <div>
+                    <strong>{{this.prod_name}}</strong><br>
+                    <small style="color: #666;">SKU: {{this.sku}}</small>
+                  </div>
+                </div>
+              </td>
+              <td style="padding: 12px; text-align: center;">${{this.price}}</td>
+              <td style="padding: 12px; text-align: center;">
+                <form action="/sales/update-cart/{{this.prod_id}}" method="POST" style="display: inline-flex; align-items: center;">
+                  <button type="button" onclick="updateQuantity({{this.prod_id}}, -1)" 
+                          style="background: #f0f0f0; border: none; padding: 5px 10px; cursor: pointer;">-</button>
+                  <input type="number" name="quantity" value="{{this.quantity}}" min="1" max="{{this.stock}}" 
+                         style="width: 50px; text-align: center; margin: 0 5px; border: 1px solid #ddd; padding: 5px;">
+                  <button type="button" onclick="updateQuantity({{this.prod_id}}, 1)" 
+                          style="background: #f0f0f0; border: none; padding: 5px 10px; cursor: pointer;">+</button>
+                </form>
+              </td>
+              <td style="padding: 12px; text-align: right;">
+                <strong>${{this.subtotal}}</strong>
+              </td>
+              <td style="padding: 12px; text-align: center;">
+                <form action="/sales/remove-from-cart/{{this.prod_id}}" method="POST" style="display: inline;">
+                  <button type="submit" class="wishlist-btn2" 
+                          style="background: #ff4444; color: white; border: none; padding: 5px 10px; cursor: pointer;">
+                    🗑️ Удалить
+                  </button>
+                </form>
+              </td>
+            </tr>
+            {{/each}}
+          </tbody>
+          <tfoot>
+            <tr style="background: #f9f9f9;">
+              <td colspan="3" style="padding: 12px; text-align: right;">
+                <strong>Общая сумма:</strong>
+              </td>
+              <td style="padding: 12px; text-align: right;">
+                <strong style="font-size: 1.2em;">${{totalAmount}}</strong>
+              </td>
+              <td></td>
+            </tr>
+          </tfoot>
+        </table>
+      </div>
+
+      <!-- Форма оформления заказа -->
+      <div class="checkout-form" style="background: #f9f9f9; padding: 20px; border-radius: 8px;">
+        <h2>Оформление заказа</h2>
+        
+        <form action="/sales/checkout" method="POST">
+          <!-- Выбор клиента -->
+          <div class="form-group" style="margin-bottom: 20px;">
+            <label style="display: block; margin-bottom: 8px; font-weight: bold;">Выберите клиента *</label>
+            <select name="client_id" required 
+                    style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 4px;">
+              <option value="">-- Выберите клиента --</option>
+              {{#each clients}}
+              <option value="{{this.client_id}}">
+                {{this.first_name}} {{this.last_name}} ({{this.email}}) - {{this.phone}}
+              </option>
+              {{/each}}
+            </select>
+            <small style="display: block; margin-top: 5px; color: #666;">
+              Или <a href="/clients/add" target="_blank">добавьте нового клиента</a>
+            </small>
+          </div>
+
+          <!-- Адрес доставки -->
+          <div class="form-group" style="margin-bottom: 20px;">
+            <label style="display: block; margin-bottom: 8px; font-weight: bold;">
+              Адрес доставки (если отличается от адреса клиента)
+            </label>
+            <textarea name="shipping_address" rows="3" 
+                      style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 4px;"
+                      placeholder="Улица, дом, квартира, город, индекс"></textarea>
+          </div>
+
+          <!-- Примечания -->
+          <div class="form-group" style="margin-bottom: 20px;">
+            <label style="display: block; margin-bottom: 8px; font-weight: bold;">Примечания к заказу</label>
+            <textarea name="notes" rows="3" 
+                      style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 4px;"
+                      placeholder="Особые пожелания по доставке, упаковке и т.д."></textarea>
+          </div>
+
+          <div class="form-actions" style="display: flex; justify-content: space-between; align-items: center;">
+            <a href="/products" class="wishlist-btn2" style="display: inline-block;">
+              ← Продолжить покупки
+            </a>
+            <button type="submit" class="add-to-cart-btn" style="width: auto;">
+              ✅ Оформить заказ на ${{totalAmount}}
+            </button>
+          </div>
+        </form>
+      </div>
+
+      {{else}}
+      <div style="text-align: center; padding: 40px 20px;">
+        <h2 style="color: #666; margin-bottom: 20px;">Ваша корзина пуста</h2>
+        <p style="margin-bottom: 30px;">Добавьте товары из каталога, чтобы оформить заказ.</p>
+        <a href="/products" class="add-to-cart-btn" style="display: inline-block;">
+          Перейти в каталог
+        </a>
+      </div>
+      {{/if}}
+    </div>
+  </section>
+</main>
+
+<script>
+  function updateQuantity(prodId, change) {
+    const form = document.querySelector(`form[action="/sales/update-cart/${prodId}"]`);
+    const input = form.querySelector('input[name="quantity"]');
+    let currentValue = parseInt(input.value);
+    const maxStock = parseInt(input.max);
+    
+    const newValue = currentValue + change;
+    if (newValue >= 1 && newValue <= maxStock) {
+      input.value = newValue;
+      // Автоматически отправляем форму
+      form.submit();
+    }
+  }
+  
+  // Автоотправка при изменении количества через input
+  document.querySelectorAll('input[name="quantity"]').forEach(input => {
+    input.addEventListener('change', function() {
+      const form = this.closest('form');
+      form.submit();
+    });
+  });
+</script>
+{{/layout}}

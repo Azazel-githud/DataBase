@@ -1,10 +1,14 @@
 const express = require('express');
+const saleController = require('../controllers/saleController');
 const router = express.Router();
-const controller = require('../controllers/saleController');
 
-router.get('/cart', controller.getCart);
-router.get('/addToCart/:prod_id', controller.addToCart);
-router.post('/checkout', controller.checkout);
-// router.get('/history/:client_id', controller.getHistory);
+// ../sales
+router.get('/cart', saleController.getCart); // Просмотр корзины
+router.post('/cart', saleController.getCart); // POST для корзины
+router.get('/addToCart/:prod_id', saleController.addToCart); // Добавить в корзину
+router.post('/remove-from-cart/:prod_id', saleController.removeFromCart); // Удалить из корзины
+router.post('/update-cart/:prod_id', saleController.updateCartQuantity); // Обновить количество
+router.post('/checkout', saleController.cartToOrder); // Оформить заказ
+router.get('/order-success/:order_id', saleController.orderSuccess); // Страница успеха
 
 module.exports = router;

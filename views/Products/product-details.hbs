@@ -1,0 +1,122 @@
+{{#> layout extraCss="style2.css"}}
+<main class="main-content">
+  <section class="product-section">
+    <div class="product-gallery">
+      <!-- Миниатюры -->
+      <div class="product-thumbnails">
+        {{#if product.image_gallery}}
+          {{#each product.image_gallery}}
+          <img class="thumbnail" src="/img/{{this}}">
+          {{/each}}
+        {{else}}
+          <img class="thumbnail" src="/img/placeholder.png" alt="Нет фото">
+        {{/if}}
+      </div>
+
+      <!-- Основное изображение -->
+      <figure class="main-product-image">
+        <img src="/img/{{product.image_main}}" alt="{{product.prod_name}}">
+        <div class="zoom-btn"><img src="/img/icon1.png"></div>
+        <div class="arrow-btn up"><img src="/img/iconamoon_arrow-up-2-thin.png"></div>
+        <div class="arrow-btn down"><img src="/img/iconamoon_arrow-up-1-thin.png"></div>
+      </figure>
+    </div>
+
+    <div class="product-info">
+      <div class="title-and-heart">
+        <h1 class="product-title">{{product.prod_name}}</h1>
+        <button class="wishlist-btn2">
+          <svg viewBox="0 0 24 24" width="24" height="24">
+            <path fill="currentColor" d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+          </svg>
+        </button>
+      </div>
+
+      <p class="product-price">${{product.price}}</p>
+      <div class="divider"></div>
+
+      {{#if product.sku}}
+        <div class="color-selection">
+          <span class="color-label">SKU</span>
+          <span class="color-value">{{product.sku}}</span>
+        </div>
+      {{/if}}
+
+      <div class="divider"></div>
+
+      <div class="quantity-add">
+        <div class="quantity-selector">
+          <div class="quantity-btn minus"><img src="/img/minus.png"></div>
+          <div class="quantity">1</div>
+          <div class="quantity-btn plus"><img src="/img/plus.png"></div>
+        </div>
+        <a href="/sales/addToCart/{{product.prod_id}}" class="add-to-cart-btn">
+          Add to Bag ${{product.price}}
+        </a>
+      </div>
+    </div>
+
+    <div class="product-details">
+      <h2 class="details-title">Product Details</h2>
+      <div class="details-content">
+        <h3 class="description-title">Description</h3>
+        <p class="description-text">
+          {{#if product.description}}
+            {{product.description}}
+          {{else}}
+            Freshly curated and presented in our vibrant reusable Mesh Pouch, this Gift Pack includes a lined A5 In-Spiral Notebook, colour-sectioned grid A7 Notepad, Everyday Gel Pen and Notebook Elastic, all exclusive to Festive Gift Packs.
+          {{/if}}
+        </p>
+        {{#if product.sku}}
+          <p class="product-sku">SKU: {{product.sku}}</p>
+        {{/if}}
+      </div>
+    </div>
+  </section>
+</main>
+
+<section class="products-scroll">
+  <h2>Best Sellers on Sale</h2>
+  <div class="products-grid">
+    {{#each relatedProducts}}
+    <a href="/products/{{this.prod_id}}" class="product-card">
+      <div class="product-image">
+        <img src="/{{this.image_main}}" alt="{{this.prod_name}}">
+        {{#if this.image_hover}}
+          <img src="/{{this.image_hover}}" class="hover">
+        {{/if}}
+        <button class="wishlist-btn">
+          <svg viewBox="0 0 24 24" width="24" height="24">
+            <path fill="currentColor" d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+          </svg>
+        </button>
+      </div>
+      <h3>{{this.prod_name}}</h3>
+      <p class="price">${{this.price}}</p>
+      {{#if this.image_main}}
+        <div class="color-option" style="--color: #f36480;"></div>
+      {{/if}}
+    </a>
+    {{/each}}
+  </div>
+</section>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const thumbnails = document.querySelectorAll('.thumbnail');
+  const mainImg = document.querySelector('.main-product-image img');
+
+  if (!mainImg || thumbnails.length === 0) return;
+
+  thumbnails.forEach(thumb => {
+    thumb.addEventListener('click', () => {
+      mainImg.src = thumb.src;
+      thumbnails.forEach(t => t.classList.remove('active'));
+      thumb.classList.add('active');
+    });
+  });
+
+  if (thumbnails[0]) thumbnails[0].classList.add('active');
+});
+</script>
+{{/layout}}

@@ -1,16 +1,29 @@
-// /routes/productRouter.js
 const express = require('express');
 const router = express.Router();
-const ctrl = require('../controllers/productController');
+const controller = require('../controllers/productController');
+const upload = require('../config/multerConfig');
 
-// Важно: порядок маршрутов — сначала параметризованные, потом общие
-router.get('/add', ctrl.addProductForm);
-router.post('/add', ctrl.createProduct);
-// router.get('/edit/:id', ctrl.editProductForm);
-// router.post('/update', ctrl.updateProduct);
-// router.post('/delete/:id', ctrl.deleteProduct);
+router.get('/', controller.getProducts);
+router.get('/add', controller.addProductForm);
+router.post('/add', upload, (req, res, next) => {
+    // Обработка ошибок multer
+    if (req.fileValidationError) {
+        return res.status(400).send(req.fileValidationError.message);
+    }
+    if (req.file && !req.file.path) {
+        return res.status(500).send('Ошибка сохранения изображения');
+    }
+    next();
+}, controller.createProduct);
+router.get('/:prod_id', controller.getProductDetails);
+router.get('/edit/:id', controller.editProductForm);
+router.post('/update/:id', upload, (req, res, next) => {
+  if (req.fileValidationError) {
+    return res.status(400).send(req.fileValidationError.message);
+  }
+  next();
+}, controller.updateProduct);
+router.post('/delete/:id', controller.deleteProduct);
 
-// Главный маршрут — в конце!
-router.get('/', ctrl.getProducts);
-    
+
 module.exports = router;

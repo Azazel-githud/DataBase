@@ -1,0 +1,35 @@
+<!-- views/partials/client-form-fields.hbs -->
+<div class="form-group">
+  <label>Email *</label>
+  <input type="email" name="email" required value="{{client.email}}">
+</div>
+
+<div class="form-group">
+  <label>Имя</label>
+  <input type="text" name="first_name" value="{{client.first_name}}">
+</div>
+
+<div class="form-group">
+  <label>Фамилия</label>
+  <input type="text" name="last_name" value="{{client.last_name}}">
+</div>
+
+<div class="form-group">
+  <label>Телефон</label>
+  <input type="tel" name="phone" value="{{client.phone}}">
+</div>
+
+<div class="form-group">
+  <label>Адрес</label>
+  <textarea name="address" rows="2">{{client.address}}</textarea>
+</div>
+
+<div class="form-group">
+  <label>Город</label>
+  <input type="text" name="city" value="{{client.city}}">
+</div>
+
+<div class="form-group">
+  <label>Страна</label>
+  <input type="text" name="country" value="{{client.country}}" placeholder="Australia">
+</div>

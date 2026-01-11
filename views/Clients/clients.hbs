@@ -1,0 +1,76 @@
+{{#> layout}}
+<main class="main-content">
+  <section class="product-section">
+    <div class="product-info">
+      <h1 class="product-title">👥 Все клиенты</h1>
+      <div class="divider"></div>
+
+      <a href="/clients/add" class="add-to-cart-btn" style="display: inline-block; margin-bottom: 20px;">
+        ➕ Добавить клиента
+      </a>
+
+      {{#if clients}}
+        <table class="client-table">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Email</th>
+              <th>Имя</th>
+              <th>Телефон</th>
+              <th>Город</th>
+              <th>Действия</th>
+            </tr>
+          </thead>
+          <tbody>
+            {{#each clients}}
+            <tr>
+              <td>{{this.client_id}}</td>
+              <td>{{this.email}}</td>
+              <td>{{this.first_name}} {{this.last_name}}</td>
+              <td>{{this.phone}}</td>
+              <td>{{this.city}}</td>
+              <td>
+                <a href="/clients/edit/{{this.client_id}}" class="wishlist-btn2" style="margin-right: 8px;">✏️</a>
+                <form action="/clients/delete/{{this.client_id}}" method="POST" style="display: inline;">
+                  <button type="submit" class="delete-btn" onclick="return confirm('Удалить клиента?')">🗑️</button>
+                </form>
+              </td>
+            </tr>
+            {{/each}}
+          </tbody>
+        </table>
+      {{else}}
+        <p>Нет клиентов.</p>
+      {{/if}}
+    </div>
+  </section>
+</main>
+
+<style>
+  .client-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 16px;
+  }
+  .client-table th,
+  .client-table td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #eee;
+  }
+  .client-table th {
+    background: #f9f9f9;
+    font-weight: 600;
+  }
+  .delete-btn {
+    background: none;
+    border: none;
+    color: #e74c3c;
+    cursor: pointer;
+    font-size: 16px;
+  }
+  .delete-btn:hover {
+    color: #c0392b;
+  }
+</style>
+{{/layout}}
